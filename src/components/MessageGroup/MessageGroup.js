@@ -1,25 +1,50 @@
-import React, { Component, PropTypes } from 'react';
+/**
+ * Copyright 2016 Dialog LLC <info@dlg.im>
+ * @flow
+ */
+
+import type { Message as MessageType } from '@dlghq/dialog-types';
+import React, { Component } from 'react';
 import classNames from 'classnames';
+import Message from '../Message/Message';
 import styles from './MessageGroup.css';
 
-class MessageGroup extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node.isRequired
-  };
+export type Props = {
+  messages: MessageType[],
+  renderActions?: () => React.Element<any>[],
+  className?: string
+};
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.children !== this.props.children ||
-           nextProps.className !== this.props.className;
+class MessageGroup extends Component {
+  props: Props;
+
+  shouldComponentUpdate(nextProps: Props): boolean {
+    return nextProps.className !== this.props.className ||
+           nextProps.messages !== this.props.messages;
   }
 
-  render() {
-    const className = classNames(styles.root, this.props.className);
+  renderMessages(): React.Element<any>[] {
+    const { messages, renderActions } = this.props;
+
+    return messages.map((message, index) => {
+      return (
+        <Message
+          message={message}
+          key={message.rid}
+          renderActions={renderActions}
+          short={index !== 0}
+        />
+      );
+    });
+  }
+
+  render(): React.Element<any> {
+    const className = classNames(styles.container, this.props.className);
 
     return (
-      <div className={className}>
-        {this.props.children}
-      </div>
+      <section className={className}>
+        {this.renderMessages()}
+      </section>
     );
   }
 }

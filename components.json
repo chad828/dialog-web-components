@@ -75,6 +75,7 @@
   {
     "name": "Chat",
     "components": [
+      "MessageGroup",
       "Message",
       "MessageState",
       "MessageContent",

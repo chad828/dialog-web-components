@@ -1,0 +1,85 @@
+[{
+  "rid": "-6708999214768844630",
+  "sortKey": "1477394067304",
+  "sender": {
+    "peer": {
+      "type": "user",
+      "id": 1709029441,
+      "key": "u1709029441"
+    },
+    "title": "Oleg Shilov",
+    "userName": "olegshilov",
+    "avatar": "https://avatars0.githubusercontent.com/u/930121",
+    "placeholder": "lblue",
+    "isVerified": false
+  },
+  "isOut": true,
+  "date": "14:14",
+  "fullDate": "2016-10-25T11:14:27.304Z",
+  "state": "sent",
+  "isOnServer": true,
+  "content": {
+    "content": "text",
+    "type": "text",
+    "text": "https://coderwall.com/p/h6yfda/use-and-to-jump-forwards-backwards-words-in-iterm-2-on-os-x",
+    "media": null
+  },
+  "reactions": [],
+  "sortDate": 1477394067.304
+}, {
+  "rid": "776849574616588714",
+  "sortKey": "1477394082448",
+  "sender": {
+    "peer": {
+      "type": "user",
+      "id": 1709029441,
+      "key": "u1709029441"
+    },
+    "title": "Oleg Shilov",
+    "userName": "olegshilov",
+    "avatar": "https://avatars0.githubusercontent.com/u/930121",
+    "placeholder": "lblue",
+    "isVerified": false
+  },
+  "isOut": true,
+  "date": "14:14",
+  "fullDate": "2016-10-25T11:14:42.448Z",
+  "state": "sent",
+  "isOnServer": true,
+  "content": {
+    "content": "text",
+    "type": "text",
+    "text": "я группы делаю в компонентах пока что",
+    "media": null
+  },
+  "reactions": [],
+  "sortDate": 1477394082.448
+}, {
+  "rid": "-2965735729322143904",
+  "sortKey": "1477394194730",
+  "sender": {
+    "peer": {
+      "type": "user",
+      "id": 1709029441,
+      "key": "u1709029441"
+    },
+    "title": "Oleg Shilov",
+    "userName": "olegshilov",
+    "avatar": "https://avatars0.githubusercontent.com/u/930121",
+    "placeholder": "lblue",
+    "isVerified": false
+  },
+  "isOut": true,
+  "date": "14:16",
+  "fullDate": "2016-10-25T11:16:34.730Z",
+  "state": "sent",
+  "isOnServer": true,
+  "content": {
+    "content": "text",
+    "type": "text",
+    "text": "ок?",
+    "media": null
+  },
+  "reactions": [],
+  "sortDate": 1477394194.73
+}]
