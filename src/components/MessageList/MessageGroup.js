@@ -5,9 +5,7 @@
 
 import type { Message as MessageType } from '@dlghq/dialog-types';
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import Message from '../Message/Message';
-import styles from './MessageGroup.css';
 
 export type Props = {
   messages: MessageType[],
@@ -16,13 +14,6 @@ export type Props = {
 };
 
 class MessageGroup extends Component {
-  props: Props;
-
-  shouldComponentUpdate(nextProps: Props): boolean {
-    return nextProps.className !== this.props.className ||
-           nextProps.messages !== this.props.messages;
-  }
-
   renderMessages(): React.Element<any>[] {
     const { messages, renderActions } = this.props;
 
@@ -39,10 +30,8 @@ class MessageGroup extends Component {
   }
 
   render(): React.Element<any> {
-    const className = classNames(styles.container, this.props.className);
-
     return (
-      <section className={className}>
+      <section className={this.props.className}>
         {this.renderMessages()}
       </section>
     );

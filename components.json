@@ -75,13 +75,13 @@
   {
     "name": "Chat",
     "components": [
-      "MessageGroup",
       "Message",
       "MessageState",
       "MessageContent",
       "MessageDivider",
       "FakeMessage",
-      "EmptyChat"
+      "EmptyChat",
+      "MessageList"
     ]
   },
   {

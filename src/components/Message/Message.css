@@ -15,7 +15,6 @@
 }
 
 .container {
-  all: initial;
   position: relative;
   display: flex;
   flex-direction: row;
