@@ -14,7 +14,8 @@ import styles from './Message.css';
 export type Props = {
   message: MessageType,
   renderActions?: () => React.Element<any>[],
-  short: boolean
+  short: boolean,
+  fake: ?boolean
 };
 
 class Message extends PureComponent {

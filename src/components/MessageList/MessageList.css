@@ -4,10 +4,6 @@
 @import '../../styles/variables.css';
 
 .container {
-  all: initial;
-}
-
-.container {
   display: block;
   height: 100%;
 }

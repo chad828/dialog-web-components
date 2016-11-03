@@ -4,23 +4,86 @@
  */
 
 import type { Message as MessageType } from '@dlghq/dialog-types';
+import type {
+  RowsRenderedEvent,
+  SizeEvent,
+  RowRenderRequest,
+  CellRenderRequest,
+  CellRenderContext
+} from 'react-virtualized';
+
 import React, { PureComponent } from 'react';
 import { AutoSizer, CellMeasurer, List } from 'react-virtualized';
 import classNames from 'classnames';
+import Spinner from '../Spinner/Spinner';
 import Message from '../Message/Message';
 import styles from './MessageList.css';
+
+// const originalMeasureCell = CellMeasurer.prototype._measureCell;
+// CellMeasurer.prototype._measureCell = function (request) {
+//   const label = `measure cell #${request.rowIndex}`;
+//   console.profile(label);
+//   const result = originalMeasureCell.call(this, request);
+//   console.profileEnd(label);
+//
+//   return result;
+// };
 
 export type Props = {
   className?: string,
   messages: MessageType[]
 };
 
+export type State = {
+  scrollTo: number
+};
+
 class MessageList extends PureComponent {
   props: Props;
+  state: State;
+
+  // refs
   list: ?List;
   measurer: ?CellMeasurer;
 
-  renderRow = ({ key, index, style }): React.Element<any> => {
+  // render context
+  width: number;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.width = 0;
+
+    this.state = {
+      scrollTo: 0
+    };
+  }
+
+  handleRowsRendered = ({ startIndex, stopIndex }: RowsRenderedEvent): void => {
+    console.debug({ startIndex, stopIndex });
+  };
+
+  handleResize = ({ width }: SizeEvent): void => {
+    if (this.width !== 0 && this.width !== width) {
+      if (this.measurer) {
+        this.measurer.resetMeasurements();
+      }
+
+      if (this.list) {
+        this.list.recomputeRowHeights();
+      }
+    }
+
+    this.width = width;
+  };
+
+  renderEmpty = (): React.Element<any> => {
+    return (
+      <Spinner />
+    );
+  };
+
+  renderRow = ({ key, index, style }: RowRenderRequest): React.Element<any> => {
     const message = this.props.messages[index];
 
     return (
@@ -33,12 +96,16 @@ class MessageList extends PureComponent {
     );
   };
 
-  renderCell = ({ key, rowIndex, style }): React.Element<any> => {
-    return this.renderRow({
-      key,
-      style,
-      index: rowIndex
-    });
+  renderCell = ({ rowIndex }: CellRenderRequest): React.Element<any> => {
+    const message = this.props.messages[rowIndex];
+
+    return (
+      <Message
+        fake
+        short={false}
+        message={message}
+      />
+    );
   };
 
   setList = (list: List): void => {
@@ -55,8 +122,8 @@ class MessageList extends PureComponent {
 
     return (
       <div className={styles.container}>
-        <AutoSizer>
-          {({ width, height }) => {
+        <AutoSizer onResize={this.handleResize}>
+          {({ width, height }: SizeEvent) => {
             return (
               <CellMeasurer
                 ref={this.setMeasurer}
@@ -65,16 +132,20 @@ class MessageList extends PureComponent {
                 rowCount={rowCount}
                 cellRenderer={this.renderCell}
               >
-                {({ getRowHeight }) => {
+                {({ getRowHeight }: CellRenderContext) => {
                   return (
                     <List
                       ref={this.setList}
                       className={className}
-                      height={height}
                       width={width}
+                      height={height}
+                      overscanRowCount={10}
+                      scrollToIndex={this.state.scrollTo}
                       rowCount={rowCount}
                       rowHeight={getRowHeight}
                       rowRenderer={this.renderRow}
+                      noRowsRenderer={this.renderEmpty}
+                      onRowsRendered={this.handleRowsRendered}
                     />
                   );
                 }}
