@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import styles from './MessageList.css';
+import styles from './MessageGroup.css';
 
-class MessageList extends Component {
+class MessageGroup extends Component {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node.isRequired
@@ -24,4 +24,4 @@ class MessageList extends Component {
   }
 }
 
-export default MessageList;
+export default MessageGroup;

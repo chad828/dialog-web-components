@@ -1,9 +1,3 @@
-```
-const messages = require('./mock');
+Basic MessageList:
 
-<div style={{ height: 600, background: '#fff' }}>
-  <MessageList
-    messages={messages}
-  />
-</div>
-```
+    <MessageList>Hello, world!</MessageList>
