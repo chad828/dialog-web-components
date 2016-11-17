@@ -2,14 +2,12 @@
  * Copyright 2016 Dialog LLC <info@dlg.im>
  * @flow
  */
-
 import type { PhotoSwipeItem, PhotoSwipeOptions } from 'photoswipe';
-import React, { Component } from 'react';
-import cx from 'classnames';
 import PhotoSwipe from 'photoswipe';
+import React, { Component } from 'react';
+import classNames from 'classnames';
 import PhotoSwipeUI from 'photoswipe/src/js/ui/photoswipe-ui-default';
 import Icon from '../Icon/Icon';
-
 import '!style!css!./Lightbox.global.css';
 import styles from './Lightbox.css';
 
@@ -18,7 +16,8 @@ export type Props = {
   startIndex: number,
   items: PhotoSwipeItem[],
   options: $Shape<PhotoSwipeOptions>,
-  onClose: () => any
+  onClose: () => any,
+  thumbnail: HTMLImageElement
 };
 
 export type State = {
@@ -47,7 +46,17 @@ class Lightbox extends Component {
         history: false,
         closeOnScroll: false,
         // UI options
-        shareEl: false
+        shareEl: false,
+        getThumbBoundsFn: () => {
+          let pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+          let rect = this.props.thumbnail.getBoundingClientRect();
+
+          return {
+            x: rect.left,
+            y: rect.top + pageYScroll,
+            w: rect.width
+          };
+        }
       });
 
       photoSwipe.listen('close', this.handleClose);
@@ -103,7 +112,7 @@ class Lightbox extends Component {
   }
 
   render(): React.Element<any> {
-    const className = cx('pswp', styles.container, this.props.className);
+    const className = classNames('pswp', styles.container, this.props.className);
 
     return (
       <div
@@ -113,18 +122,18 @@ class Lightbox extends Component {
         role="dialog"
         aria-hidden="true"
       >
-        <div className={cx('pswp__bg', styles.background)} />
+        <div className={classNames('pswp__bg', styles.background)} />
 
-        <div className={cx('pswp__scroll-wrap', styles.scroll)}>
+        <div className={classNames('pswp__scroll-wrap', styles.scroll)}>
 
-          <div className={cx('pswp__container', styles.wrapper)}>
-            <div className={cx('pswp__item', styles.item)} />
-            <div className={cx('pswp__item', styles.item)} />
-            <div className={cx('pswp__item', styles.item)} />
+          <div className={classNames('pswp__container', styles.wrapper)}>
+            <div className={classNames('pswp__item', styles.item)} />
+            <div className={classNames('pswp__item', styles.item)} />
+            <div className={classNames('pswp__item', styles.item)} />
           </div>
 
           <div className="pswp__ui pswp__ui--hidden">
-            <div className={cx('pswp__top-bar', styles.toolbar)}>
+            <div className={classNames('pswp__top-bar', styles.toolbar)}>
               <div className="pswp__counter" />
               <button
                 className="pswp__button pswp__button--close"

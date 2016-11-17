@@ -32,7 +32,7 @@ const handleClose = () => {
           key={index}
           src={image.src}
           style={{ width: 200, margin: 10 }}
-          onClick={() => {setState({ isOpen: true, index })}}
+          onClick={(event) => {setState({ isOpen: true, index, thumbnail: event.target })}}
         />
       );
     })
@@ -41,6 +41,7 @@ const handleClose = () => {
     <Lightbox
       startIndex={state.index}
       items={state.items}
+      thumbnail={state.thumbnail}
       onClose={handleClose}
     />
   ) : null}
