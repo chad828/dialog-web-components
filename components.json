@@ -80,7 +80,8 @@
       "SidebarGroup",
       "RecentItem",
       "RecentGroup",
-      "FakeRecentItem"
+      "FakeRecentItem",
+      "SidebarFooter"
     ]
   },
   {
