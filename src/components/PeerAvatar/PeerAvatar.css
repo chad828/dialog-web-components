@@ -6,11 +6,5 @@
 }
 
 .online {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: var(--avatar-online-size);
-  height: var(--avatar-online-size);
-  border-radius: 50%;
-  background-color: var(--avatar-online-color);
+  fill: var(--avatar-online-color);
 }

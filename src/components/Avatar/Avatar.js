@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import isEmoji from '../../utils/isEmoji';
 import styles from './Avatar.css';
 
-const SIZES = {
+export const SIZES = {
   tiny: 14,
   small: 22,
   medium: 28,
