@@ -4,21 +4,12 @@
  */
 
 import type { AvatarPlaceholder } from '@dlghq/dialog-types';
+import type { AvatarSize } from './getAvatarSize';
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
+import getAvatarSize from './getAvatarSize';
 import isEmoji from '../../utils/isEmoji';
 import styles from './Avatar.css';
-
-export const SIZES = {
-  tiny: 14,
-  small: 22,
-  medium: 28,
-  large: 36,
-  big: 100,
-  super: 150
-};
-
-export type AvatarSize = 'tiny' | 'small' | 'medium' | 'large' | 'big' | 'super' | number;
 
 export type Props = {
   className?: string,
@@ -38,10 +29,7 @@ class Avatar extends PureComponent {
   };
 
   getAvatarText(): ?string {
-    const { title, size } = this.props;
-    if (size === 'tiny' || (typeof size === 'number' && size < 20)) {
-      return null;
-    }
+    const { title } = this.props;
 
     if (title && title.length) {
       const titleArray = title.trim().split(' ');
@@ -59,20 +47,14 @@ class Avatar extends PureComponent {
   }
 
   getAvatarSize(): number {
-    const { size } = this.props;
-
-    if (typeof size === 'number') {
-      return size;
-    }
-
-    return SIZES[size];
+    return getAvatarSize(this.props.size);
   }
 
   render(): React.Element<any> {
     const { image, placeholder, title } = this.props;
-    const avatarText = this.getAvatarText();
-    const avatarSize = this.getAvatarSize();
-    const twoChars = Boolean(avatarText && avatarText.length !== 1);
+    const size = this.getAvatarSize();
+    const text = size >= 20 ? this.getAvatarText() : null;
+    const twoChars = Boolean(text && text.length !== 1);
 
     const className = classNames({
       [styles.image]: image,
@@ -81,9 +63,9 @@ class Avatar extends PureComponent {
     }, this.props.className);
 
     const avatarStyles = {
-      width: avatarSize,
-      height: avatarSize,
-      fontSize: Math.min(Math.floor(twoChars ? (avatarSize / 2.2) : (avatarSize / 1.9)), 60)
+      width: size,
+      height: size,
+      fontSize: Math.min(Math.floor(twoChars ? (size / 2.2) : (size / 1.9)), 60)
     };
 
     if (image) {
@@ -94,8 +76,8 @@ class Avatar extends PureComponent {
               className={className}
               style={avatarStyles}
               src={image}
-              width={avatarSize}
-              height={avatarSize}
+              width={size}
+              height={size}
               alt={title}
             />
           </div>
@@ -107,8 +89,8 @@ class Avatar extends PureComponent {
           className={className}
           style={avatarStyles}
           src={image}
-          width={avatarSize}
-          height={avatarSize}
+          width={size}
+          height={size}
           alt={title}
         />
       );
@@ -118,13 +100,13 @@ class Avatar extends PureComponent {
     if (this.props.onClick) {
       return (
         <div onClick={this.props.onClick} className={styles.clickable}>
-          <div className={className} title={title} style={avatarStyles}>{avatarText}</div>
+          <div className={className} title={title} style={avatarStyles}>{text}</div>
         </div>
       );
     }
 
     return (
-      <div className={className} title={title} style={avatarStyles}>{avatarText}</div>
+      <div className={className} title={title} style={avatarStyles}>{text}</div>
     );
   }
 }
